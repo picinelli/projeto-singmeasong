@@ -1,5 +1,8 @@
 import { prisma } from "../../database.js";
-import {createRecommendation} from "./recommendationFactory.js";
+import {
+  createElevenRecommendations,
+  createRecommendation,
+} from "./recommendationFactory.js";
 import insertFiveDownvotes from "./votesFactory.js";
 
 async function createScenarioOneRecommendation() {
@@ -13,6 +16,10 @@ async function createScenarioOneRecommendationWithFiveDownvotes() {
   return { id };
 }
 
+async function createScenarioElevenRecommendations() {
+  return await createElevenRecommendations();
+}
+
 async function deleteAllData() {
   await prisma.$executeRaw`DELETE FROM recommendations`;
 }
@@ -21,4 +28,5 @@ export {
   deleteAllData,
   createScenarioOneRecommendation,
   createScenarioOneRecommendationWithFiveDownvotes,
+  createScenarioElevenRecommendations,
 };

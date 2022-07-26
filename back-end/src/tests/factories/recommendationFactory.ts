@@ -7,17 +7,16 @@ async function createRecommendation() {
   });
 }
 
-//TODO: Tem alguem usando isso?
 async function createElevenRecommendations() {
   const recommendations = [];
-  for (let i = 0; i <= 11; i++) {
+  for (let i = 0; i <= 10; i++) {
     recommendations.push(
       await prisma.recommendation.create({
         data: await createRecommendationData(),
       })
     );
   }
-  return recommendations;
+  return { recommendations };
 }
 
 export { createRecommendation, createElevenRecommendations };
