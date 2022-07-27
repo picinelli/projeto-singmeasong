@@ -25,6 +25,17 @@ describe("POST /recommendations tests", () => {
     expect(recommendationOnDB).toMatchObject(response.body);
   });
 
+  it("given already used name, should return 409", async () => {
+    const body = await createRecommendationData();
+    const originalUser = await supertest(app)
+      .post("/recommendations")
+      .send(body);
+    expect(originalUser.statusCode).toBe(201);
+
+    const newUser = await supertest(app).post("/recommendations").send(body);
+    expect(newUser.statusCode).toBe(409);
+  });
+
   it("given invalid typeof name, should return 422", async () => {
     const body = await createRecommendationData();
     const response = await supertest(app)
@@ -115,7 +126,6 @@ describe("GET /recommendations", () => {
     expect(response.statusCode).toBe(200);
 
     recommendations.reverse().splice(recommendations.length - 1, 1);
-
     expect(response.body).toMatchObject(recommendations);
   });
 });
@@ -128,7 +138,6 @@ describe("GET /recommendations/:id", () => {
     );
 
     expect(response.statusCode).toBe(200);
-
     expect(response.body).toMatchObject(recommendation);
   });
 
@@ -141,6 +150,15 @@ describe("GET /recommendations/:id", () => {
   });
 });
 
+//TODO: Fazer os testes da rota random
+// describe("GET /recommendations/random", () => {
+// });
+
+//TODO: Fazer os testes da rota top
+// describe("GET /recommendations/top/:amount", () => {
+// });
+
 afterAll(async () => {
+  await deleteAllData();
   await prisma.$disconnect();
 });
