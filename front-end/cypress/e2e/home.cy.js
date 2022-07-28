@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import { faker } from "@faker-js/faker";
 
 describe("should create new recommendation", () => {
@@ -21,5 +23,5 @@ describe("should create new recommendation", () => {
 });
 
 beforeEach(() => {
-	cy.resetDatabase();
+  cy.resetDatabase();
 });

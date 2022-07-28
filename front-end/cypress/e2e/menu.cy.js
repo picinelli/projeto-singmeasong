@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("should navigate through menu page options", () => {
   it("on top button click, should visit /top", () => {
     cy.visit("http://localhost:3000/");

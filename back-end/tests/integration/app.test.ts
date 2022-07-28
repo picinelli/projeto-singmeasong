@@ -1,13 +1,13 @@
 import supertest from "supertest";
-import app from "../app.js";
-import { prisma } from "../database.js";
-import createRecommendationData from "./factories/recommendationsBodyFactory.js";
+import app from "../../src/app.js";
+import { prisma } from "../../src/database.js";
+import createRecommendationData from "../factories/recommendationsBodyFactory.js";
 import {
   createScenarioElevenRecommendations,
   createScenarioOneRecommendation,
   createScenarioOneRecommendationWithFiveDownvotes,
   deleteAllData,
-} from "./factories/scenarioFactory.js";
+} from "../factories/scenarioFactory.js";
 
 beforeEach(async () => {
   await deleteAllData();

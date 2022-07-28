@@ -1,4 +1,4 @@
-import { prisma } from "../../database";
+import { prisma } from "../../src/database";
 
 export default async function insertFiveDownvotes(id: number) {
   return await prisma.recommendation.update({

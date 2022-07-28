@@ -1,4 +1,4 @@
-import { prisma } from "../../database.js";
+import { prisma } from "../../src/database.js";
 import {
   createElevenRecommendations,
   createRecommendation,
