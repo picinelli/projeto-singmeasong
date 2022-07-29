@@ -150,13 +150,36 @@ describe("GET /recommendations/:id", () => {
   });
 });
 
-//TODO: Fazer os testes da rota random
-// describe("GET /recommendations/random", () => {
-// });
+describe("GET /recommendations/random", () => {
+  it("should not return a recommendation", async () => {
+    const randomRecommendation = await supertest(app).get(
+      "/recommendations/random"
+    );
 
-//TODO: Fazer os testes da rota top
-// describe("GET /recommendations/top/:amount", () => {
-// });
+    expect(randomRecommendation.statusCode).toBe(404);
+  });
+
+  it("should return a recommendation", async () => {
+    await createScenarioOneRecommendation();
+    const randomRecommendation = await supertest(app).get(
+      "/recommendations/random"
+    );
+
+    expect(randomRecommendation.statusCode).toBe(200);
+  });
+});
+
+describe("GET /recommendations/top/:amount", () => {
+  it("should return an array of recomendations", async () => {
+    await createScenarioElevenRecommendations();
+
+    const recomendations = await supertest(app).get(
+      "/recommendations/top/10"
+    );
+
+    expect(recomendations.statusCode).toBe(200);
+  });
+});
 
 afterAll(async () => {
   await deleteAllData();
