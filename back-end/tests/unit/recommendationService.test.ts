@@ -3,7 +3,6 @@ import { jest } from "@jest/globals";
 import { recommendationRepository } from "../../src/repositories/recommendationRepository.js";
 import { recommendationService } from "../../src/services/recommendationsService.js";
 import createRecommendationData from "../factories/recommendationsBodyFactory.js";
-import * as errorUtils from "../../src/utils/errorUtils.js"
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -17,18 +16,23 @@ describe("UNIT test - insert", () => {
       .mockResolvedValueOnce(null);
     jest.spyOn(recommendationRepository, "create").mockResolvedValueOnce();
 
-    await recommendationService.insert(data)
+    await recommendationService.insert(data);
 
     expect(recommendationRepository.create).toBeCalledTimes(1);
   });
 
   it("Should receive conflict Error", async () => {
-    const data = await createRecommendationData()
-    jest.spyOn(recommendationRepository, "findByName").mockImplementationOnce(():any => data)
+    const data = await createRecommendationData();
+    jest
+      .spyOn(recommendationRepository, "findByName")
+      .mockImplementationOnce((): any => data);
 
-    const promise = recommendationService.insert(data)
+    const promise = recommendationService.insert(data);
 
-    expect(promise).rejects.toEqual({type: "conflict", message: "Recommendations names must be unique"})
+    expect(promise).rejects.toEqual({
+      type: "conflict",
+      message: "Recommendations names must be unique",
+    });
   });
 });
 

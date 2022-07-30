@@ -24,6 +24,26 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import { faker } from "@faker-js/faker";
+
+
 Cypress.Commands.add("resetDatabase", () => {
-	cy.request("DELETE", "http://localhost:5000/recommendations/delete").as("resetDatabase");
+  cy.request("DELETE", "http://localhost:5000/recommendations/delete").as(
+    "resetDatabase"
+  );
+});
+
+Cypress.Commands.add("createRecommendation", () => {
+  const recommendation = {
+    name: faker.lorem.lines(1),
+    youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+  };
+  cy.visit("http://localhost:3000/");
+
+  cy.get("#name").type(recommendation.name);
+  cy.get("#youtubeLink").type(recommendation.youtubeLink);
+
+  cy.intercept("POST", "/recommendations").as("createRecommendation");
+  cy.get("#createRecommendation").click();
+  cy.wait("@createRecommendation");
 });
