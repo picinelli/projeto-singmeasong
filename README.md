@@ -11,7 +11,7 @@
 	🚀 Concluído! 🚀
   </h4>
   <p align="center">
-    Aplicação full-stack destinada a recomendações de músicas. **(TESTES APENAS)**
+    Aplicação full-stack destinada a recomendações de músicas. (**TESTES APENAS**)
     <br />
     <a href="https://github.com/picinelli/projeto-singmeasong"><strong>Código JS»</strong></a>
 </div>
