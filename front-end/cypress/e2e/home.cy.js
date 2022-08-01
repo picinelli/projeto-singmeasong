@@ -24,6 +24,30 @@ describe("should create new recommendation", () => {
 
     cy.contains(`${recommendation.name}`).should("be.visible");
   });
+
+  it("Should fail to create recommendation with same name", () => {
+    const stub = cy.stub() 
+    const recommendation = {
+      name: faker.lorem.lines(1),
+      youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+    };
+
+    cy.visit("http://localhost:3000/");
+
+    cy.get("#name").type(recommendation.name);
+    cy.get("#youtubeLink").type(recommendation.youtubeLink);
+
+    cy.intercept("POST", "/recommendations").as("createRecommendation");
+    cy.get("#createRecommendation").click();
+    cy.wait("@createRecommendation");
+
+    cy.intercept("POST", "/recommendations").as("createRecommendation");
+    cy.on ('window:alert', stub)
+    cy.get("#createRecommendation").click().then(() => {
+      expect(stub.getCall(0)).to.be.calledWith('Error creating recommendation!')
+    })
+    cy.wait("@createRecommendation");
+  })
 });
 
 describe("should upvote and downvote onclick | HOME", () => {
