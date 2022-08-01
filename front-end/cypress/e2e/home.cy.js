@@ -26,7 +26,7 @@ describe("should create new recommendation", () => {
   });
 });
 
-describe("should upvote and downvote onclick", () => {
+describe("should upvote and downvote onclick | HOME", () => {
   it("should upvote successfully", () => {
     cy.visit("http://localhost:3000/");
     const recommendation = {
